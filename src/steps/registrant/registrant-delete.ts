@@ -41,7 +41,11 @@ export class DeleteRegistrantStep extends BaseStep implements StepInterface {
       return this.pass('Successfully deleted GoTo Webinar registrant', []);
     } catch (e) {
       if (e.response.status === 404) {
-        return this.error(e.response.data.description);
+        return this.error(e.response.data.description + '%s', [JSON.stringify({
+          webinarKey,
+          organizerKey,
+          registrantKey,
+        })]);
       }
 
       return this.error('There was an error deleting the registrant in GoTo Webinar: %s', [

@@ -99,7 +99,6 @@ export class RegistrantFieldEqualsStep extends BaseStep implements StepInterface
         }
       }
     } catch (e) {
-      console.log(e);
       if (e instanceof util.UnknownOperatorError) {
         return this.error('%s Please provide one of: %s', [e.message, baseOperators.join(', ')]);
       }
@@ -107,7 +106,11 @@ export class RegistrantFieldEqualsStep extends BaseStep implements StepInterface
         return this.error(e.message);
       }
       if (e.response.status === 404) {
-        return this.error(e.response.data.description);
+        return this.error(e.response.data.description + '%s', [JSON.stringify({
+          webinarKey,
+          organizerKey,
+          registrantKey,
+        })]);
       }
 
       return this.error('There was an error during validation of registrant field: %s', [e.message]);
