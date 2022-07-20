@@ -106,11 +106,7 @@ export class RegistrantFieldEqualsStep extends BaseStep implements StepInterface
         return this.error(e.message);
       }
       if (e.response.status === 404) {
-        return this.error(e.response.data.description + '%s', [JSON.stringify({
-          webinarKey,
-          organizerKey,
-          registrantKey,
-        })]);
+        return this.error(`${e.response.data.description}: %s`, [JSON.stringify({ webinarKey, organizerKey, registrantKey })]);
       }
 
       return this.error('There was an error during validation of registrant field: %s', [e.message]);
