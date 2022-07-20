@@ -32,29 +32,13 @@ describe('Cog:GetManifest', () => {
     });
   });
 
-  it('should return expected cog auth fields', (done) => {
-    cogUnderTest.getManifest(null, (err, manifest: CogManifest) => {
-      const authFields: any[] = manifest.getAuthFieldsList().map((field: FieldDefinition) => {
-        return field.toObject();
-      });
-
-      // Useragent auth field
-      const ua: any = authFields.filter(a => a.key === 'userAgent')[0];
-      expect(ua.type).to.equal(FieldDefinition.Type.STRING);
-      expect(ua.optionality).to.equal(FieldDefinition.Optionality.REQUIRED);
-      expect(!!ua.help).to.equal(true);
-
-      done();
-    });
-  });
-
   it('should return expected step definitions', (done) => {
     cogUnderTest.getManifest(null, (err, manifest: CogManifest) => {
       const stepDefs: StepDefinition[] = manifest.getStepDefinitionsList();
 
       // Step definitions list includes user-field-equals step.
-      const hasUserFieldEquals: boolean = stepDefs.filter(s => s.getStepId() === 'UserFieldEqualsStep').length === 1;
-      expect(hasUserFieldEquals).to.equal(true);
+      const hasCreateRegistrantStep: boolean = stepDefs.filter(s => s.getStepId() === 'CreateRegistrantStep').length === 1;
+      expect(hasCreateRegistrantStep).to.equal(true);
 
       done();
     });

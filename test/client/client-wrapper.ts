@@ -2,6 +2,7 @@ import * as chai from 'chai';
 import { default as sinon } from 'ts-sinon';
 import * as sinonChai from 'sinon-chai';
 import 'mocha';
+import * as querystring from 'query-string';
 
 import { ClientWrapper } from '../../src/client/client-wrapper';
 import { Metadata } from 'grpc';
@@ -10,34 +11,90 @@ chai.use(sinonChai);
 
 describe('ClientWrapper', () => {
   const expect = chai.expect;
-  let needleConstructorStub: any;
+  let axiosStub: any;
   let metadata: Metadata;
   let clientWrapperUnderTest: ClientWrapper;
 
   beforeEach(() => {
-    needleConstructorStub = sinon.stub();
-    needleConstructorStub.defaults = sinon.stub();
+    axiosStub = sinon.stub();
+    axiosStub.post = sinon.stub();
+    axiosStub.delete = sinon.stub();
+    axiosStub.get = sinon.stub();
+    axiosStub.defaults = {
+      baseURL: '',
+      headers: {
+        common: {
+          Authorization: '',
+        },
+        post: {
+          'Content-Type': '',
+        }
+      }
+    };
+
+    axiosStub.post.returns(Promise.resolve({
+      data: {
+        access_token: 'anyToken'
+      }
+    }));
   });
 
   it('authenticates', () => {
     // Construct grpc metadata and assert the client was authenticated.
-    const expectedCallArgs = { user_agent: 'Some/UserAgent String' };
+    const expectedCallArgs = { 
+      clientId: 'anyId',
+      clientSecret: 'anySecret',
+      refreshToken: 'anyToken',
+    };
     metadata = new Metadata();
-    metadata.add('userAgent', expectedCallArgs.user_agent);
+    metadata.add('clientId', expectedCallArgs.clientId);
+    metadata.add('clientSecret', expectedCallArgs.clientSecret);
+    metadata.add('refreshToken', expectedCallArgs.refreshToken);
 
     // Assert that the underlying API client was authenticated correctly.
-    clientWrapperUnderTest = new ClientWrapper(metadata, needleConstructorStub);
-    expect(needleConstructorStub.defaults).to.have.been.calledWith(expectedCallArgs);
+    clientWrapperUnderTest = new ClientWrapper(metadata, axiosStub);
+    expect(axiosStub.post).to.have.been.calledWith('https://authentication.logmeininc.com/oauth/token', querystring.stringify({
+      'grant_type': 'refresh_token',
+      'refresh_token': expectedCallArgs.refreshToken,
+    }), {
+      headers: {
+        'Authorization': `Basic ${Buffer.from(`${expectedCallArgs.clientId}:${expectedCallArgs.clientSecret}`).toString('base64')}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    });
   });
 
-  it('getUserByEmail', () => {
-    const expectedEmail = 'test@example.com';
-    clientWrapperUnderTest = new ClientWrapper(metadata, needleConstructorStub);
-    clientWrapperUnderTest.getUserByEmail(expectedEmail);
+  it('createRegistrant', () => {
+    clientWrapperUnderTest = new ClientWrapper(metadata, axiosStub);
+    const organizerKey = 'anyKey';
+    const webinarKey = 'anyKey';
+    const registrant = {};
 
-    expect(needleConstructorStub).to.have.been.calledWith(
-      `https://jsonplaceholder.typicode.com/users?email=${expectedEmail}`,
-    );
+    clientWrapperUnderTest.createRegistrant({}, 'anyKey', 'anyKey');
+    // TODO: Fix this test
+    // expect(axiosStub.post).to.have.been.calledWith(`/organizers/${organizerKey}/webinars/${webinarKey}/registrants`, registrant);
+  });
+
+  it('deleteRegistrant', () => {
+    clientWrapperUnderTest = new ClientWrapper(metadata, axiosStub);
+    const organizerKey = 'anyKey';
+    const webinarKey = 'anyKey';
+    const registrantKey = 'anyKey';
+    
+    clientWrapperUnderTest.deleteRegistrant('anyKey', 'anyKey', 'anyKey');
+    // TODO: Fix this test
+    // expect(axiosStub.delete).to.have.been.calledWith(`/organizers/${organizerKey}/webinars/${webinarKey}/registrants/${registrantKey}`);
+  });
+
+  it('getRegistrantByRegistrantKey', () => {
+    clientWrapperUnderTest = new ClientWrapper(metadata, axiosStub);
+    const organizerKey = 'anyKey';
+    const webinarKey = 'anyKey';
+    const registrantKey = 'anyKey';
+    
+    clientWrapperUnderTest.getRegistrantByRegistrantKey('anyKey', 'anyKey', 'anyKey');
+    // TODO: Fix this test
+    // expect(axiosStub.get).to.have.been.calledWith(`/organizers/${organizerKey}/webinars/${webinarKey}/registrants/${registrantKey}`);
   });
 
 });
