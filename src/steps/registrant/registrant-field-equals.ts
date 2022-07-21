@@ -9,7 +9,7 @@ export class RegistrantFieldEqualsStep extends BaseStep implements StepInterface
 
   protected stepName: string = 'Check a field on a GoTo Webinar Registrant';
   // tslint:disable-next-line:max-line-length
-  protected stepExpression: string = 'the (?<field>[a-zA-Z0-9_-]+) field on goto webinar registrant (?<registrantKey>.+\@.+\..+) should (?<operator>be set|not be set|be less than|be greater than|be one of|be|contain|not be one of|not be|not contain|match|not match) ?(?<expectation>.+)?';
+  protected stepExpression: string = 'the (?<field>[a-zA-Z0-9_-]+) field on goto webinar registrant (?<registrantKey>[a-zA-Z0-9_-]+) should (?<operator>be set|not be set|be less than|be greater than|be one of|be|contain|not be one of|not be|not contain|match|not match) ?(?<expectation>.+)?';
   protected stepType: StepDefinition.Type = StepDefinition.Type.VALIDATION;
   protected expectedFields: Field[] = [{
     field: 'organizerKey',
@@ -43,7 +43,7 @@ export class RegistrantFieldEqualsStep extends BaseStep implements StepInterface
     type: RecordDefinition.Type.KEYVALUE,
     fields: [{
       field: 'registrantKey',
-      type: FieldDefinition.Type.NUMERIC,
+      type: FieldDefinition.Type.STRING,
       description: "Registrant's Key",
     }, {
       field: 'firstName',
@@ -76,8 +76,11 @@ export class RegistrantFieldEqualsStep extends BaseStep implements StepInterface
 
     try {
       let data: any = await this.client.getRegistrantByRegistrantKey(registrantKey, webinarKey, organizerKey);
-      data = data.data; // Reassign data from axios response
-      data['registrantKey'] = data['joinUrl'].split('/join/')[1].split('/')[1];
+      data = data.data;
+      // There is an issue with bigInt where the it is not showing the complete registrantId
+      // Using regex, put quotes on the registrantKey to get full key when parsed
+      data = data.replace(/([\[:])?(\d+)([,\}\]])/g, '$1\"$2\"$3');
+      data = JSON.parse(data);
 
       if (data && data.hasOwnProperty(field)) {
         const result = this.assert(operator, data[field], expectedValue, field);
@@ -107,7 +110,7 @@ export class RegistrantFieldEqualsStep extends BaseStep implements StepInterface
         return this.error(e.message);
       }
       if (e.response && e.response.status === 404) {
-        return this.error(`${e.response.data.description}: %s`, [JSON.stringify({ webinarKey, organizerKey, registrantKey })]);
+        return this.error(`${JSON.parse(e.response.data).description}: %s`, [JSON.stringify({ webinarKey, organizerKey, registrantKey })]);
       }
 
       return this.error('There was an error during validation of registrant field: %s', [e.message]);

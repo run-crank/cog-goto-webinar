@@ -72,7 +72,7 @@ describe('ClientWrapper', () => {
 
     clientWrapperUnderTest.createRegistrant({}, 'anyKey', 'anyKey');
     // TODO: Fix this test
-    // expect(axiosStub.post).to.have.been.calledWith(`/organizers/${organizerKey}/webinars/${webinarKey}/registrants`, registrant);
+    // expect(axiosStub.post).to.have.been.calledWith(`/organizers/${organizerKey}/webinars/${webinarKey}/registrants`, registrant, { transformResponse: [data => data] });
   });
 
   it('deleteRegistrant', () => {
@@ -83,7 +83,7 @@ describe('ClientWrapper', () => {
     
     clientWrapperUnderTest.deleteRegistrant('anyKey', 'anyKey', 'anyKey');
     // TODO: Fix this test
-    // expect(axiosStub.delete).to.have.been.calledWith(`/organizers/${organizerKey}/webinars/${webinarKey}/registrants/${registrantKey}`);
+    // expect(axiosStub.delete).to.have.been.calledWith(`/organizers/${organizerKey}/webinars/${webinarKey}/registrants/${registrantKey}`, { transformResponse: [data => data] });
   });
 
   it('getRegistrantByRegistrantKey', () => {
@@ -94,7 +94,7 @@ describe('ClientWrapper', () => {
     
     clientWrapperUnderTest.getRegistrantByRegistrantKey('anyKey', 'anyKey', 'anyKey');
     // TODO: Fix this test
-    // expect(axiosStub.get).to.have.been.calledWith(`/organizers/${organizerKey}/webinars/${webinarKey}/registrants/${registrantKey}`);
+    // expect(axiosStub.get).to.have.been.calledWith(`/organizers/${organizerKey}/webinars/${webinarKey}/registrants/${registrantKey}`, { transformResponse: [data => data] });
   });
 
 });

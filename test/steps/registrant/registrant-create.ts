@@ -88,10 +88,10 @@ describe('CreateRegistrantStep', () => {
           }
         }));
         clientWrapperStub.createRegistrant.returns(Promise.resolve({
-          data: {
+          data: JSON.stringify({
             registrantKey: 'anyValue',
             joinUrl: 'https://anyDomain/join/anyWebinarKey/anyRegirantKey',
-          }
+          }),
         }));
       });
 

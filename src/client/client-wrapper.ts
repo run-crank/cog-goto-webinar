@@ -34,6 +34,7 @@ class ClientWrapper {
               this.client.defaults.baseURL = 'https://api.getgo.com/G2W/rest/v2';
               this.client.defaults.headers.common['Authorization'] = `Bearer ${tokenResponse.data['access_token']}`;
               this.client.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+              this.client.defaults.headers.get['Content-Type'] = 'application/json';
 
               resolve(true);
             } else {

@@ -6,7 +6,7 @@ import { Step, FieldDefinition, StepDefinition, RecordDefinition, StepRecord } f
 export class DeleteRegistrantStep extends BaseStep implements StepInterface {
 
   protected stepName: string = 'Delete a GoTo Webinar Registrant';
-  protected stepExpression: string = 'delete a goto webinar registrant';
+  protected stepExpression: string = 'delete the (?<registrantKey>[a-zA-Z0-9_-]+) goto webinar registrant';
   protected stepType: StepDefinition.Type = StepDefinition.Type.ACTION;
 
   protected expectedFields: Field[] = [{
@@ -41,7 +41,7 @@ export class DeleteRegistrantStep extends BaseStep implements StepInterface {
       return this.pass('Successfully deleted GoTo Webinar registrant', []);
     } catch (e) {
       if (e.response.status === 404) {
-        return this.error(`${e.response.data.description}: %s`, [JSON.stringify({ webinarKey, organizerKey, registrantKey })]);
+        return this.error(`${JSON.parse(e.response.data).description}: %s`, [JSON.stringify({ webinarKey, organizerKey, registrantKey })]);
       }
 
       return this.error('There was an error deleting the registrant in GoTo Webinar: %s', [

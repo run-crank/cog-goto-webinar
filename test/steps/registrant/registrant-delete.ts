@@ -27,7 +27,7 @@ describe('DeleteRegistrantStep', () => {
       const stepDef: StepDefinition = stepUnderTest.getDefinition();
       expect(stepDef.getStepId()).to.equal('DeleteRegistrantStep');
       expect(stepDef.getName()).to.equal('Delete a GoTo Webinar Registrant');
-      expect(stepDef.getExpression()).to.equal('delete a goto webinar registrant');
+      expect(stepDef.getExpression()).to.equal('delete the (?<registrantKey>[a-zA-Z0-9_-]+) goto webinar registrant');
       expect(stepDef.getType()).to.equal(StepDefinition.Type.ACTION);
     });
 
@@ -88,10 +88,10 @@ describe('DeleteRegistrantStep', () => {
           registrantKey: expectedRegistrant.registrantKey,
         }));
         clientWrapperStub.deleteRegistrant.returns(Promise.resolve({
-          data: {
+          data: JSON.stringify({
             registrantKey: 'anyValue',
             joinUrl: 'anyValue',
-          }
+          }),
         }));
       });
 

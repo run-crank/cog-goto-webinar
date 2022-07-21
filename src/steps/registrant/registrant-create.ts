@@ -44,28 +44,28 @@ export class CreateRegistrantStep extends BaseStep implements StepInterface {
 
   async executeStep(step: Step) {
     const stepData: any = step.getData().toJavaScript();
-    const organizerKey = stepData.organizerKey.toString();
-    const webinarKey = stepData.webinarKey.toString();
+    const organizerKey = stepData.organizerKey;
+    const webinarKey = stepData.webinarKey;
     const registrant = stepData.registrant;
 
     try {
-      let data = await this.client.createRegistrant(registrant, webinarKey, organizerKey);
-      // Reassign data from axios response
+      let data: any = await this.client.createRegistrant(registrant, webinarKey, organizerKey);
       data = data.data;
+      // There is an issue with bigInt where the it is not showing the complete registrantId
+      // Using regex, put quotes on the registrantKey to get full key when parsed
+      data = data.replace(/([\[:])?(\d+)([,\}\]])/g, '$1\"$2\"$3');
+      data = JSON.parse(data);
 
-      // Append registrationKey and joinUrl from create response
-      // The registrationKey from the response for some reason is not the real regKey
-      // The real regKey is in the joinUrl so we have to set that one instead
-      // joinUrl looks like 'https://global.gotowebinar.com/join/{webinarKey}/{registrantKey}'
-      registrant['registrantKey'] = data['joinUrl'].split('/join/')[1].split('/')[1];
+      registrant['registrantKey'] = data['registrantKey'];
       registrant['joinUrl'] = data['joinUrl'];
+
       const orderedRecord = this.createOrderedRecord(registrant, stepData['__stepOrder']);
 
       const record = this.createRecord(registrant);
       return this.pass('Successfully created GoTo Webinar registrant', [], [record, orderedRecord]);
     } catch (e) {
       if (e.response && e.response.status === 404) {
-        return this.error(`${e.response.data.description}: %s`, [JSON.stringify({ webinarKey, organizerKey })]);
+        return this.error(`${JSON.parse(e.response.data).description}: %s`, [JSON.stringify({ webinarKey, organizerKey })]);
       }
 
       if (e.response && e.response.status === 409) {
