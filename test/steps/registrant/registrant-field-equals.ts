@@ -27,7 +27,7 @@ describe('RegistrantFieldEqualsStep', () => {
       const stepDef: StepDefinition = stepUnderTest.getDefinition();
       expect(stepDef.getStepId()).to.equal('RegistrantFieldEqualsStep');
       expect(stepDef.getName()).to.equal('Check a field on a GoTo Webinar Registrant');
-      expect(stepDef.getExpression()).to.equal('the (?<field>[a-zA-Z0-9_-]+) field on goto webinar registrant (?<registrantKey>.+\@.+\..+) should (?<operator>be set|not be set|be less than|be greater than|be one of|be|contain|not be one of|not be|not contain|match|not match) ?(?<expectation>.+)?');
+      expect(stepDef.getExpression()).to.equal('the (?<field>[a-zA-Z0-9_-]+) field on goto webinar registrant (?<registrantKey>[a-zA-Z0-9_-]+) should (?<operator>be set|not be set|be less than|be greater than|be one of|be|contain|not be one of|not be|not contain|match|not match) ?(?<expectation>.+)?');
       expect(stepDef.getType()).to.equal(StepDefinition.Type.VALIDATION);
     });
 
@@ -91,11 +91,11 @@ describe('RegistrantFieldEqualsStep', () => {
         }));
 
         clientWrapperStub.getRegistrantByRegistrantKey.returns(Promise.resolve({
-          data: {
+          data: JSON.stringify({
             registrantKey: 'anyValue',
             joinUrl: 'https://anyDomain/join/anyWebinarKey/anyRegirantKey',
             anyField: 'anyValue'
-          }
+          }),
         }));
 
         await stepUnderTest.executeStep(protoStep);
@@ -124,11 +124,11 @@ describe('RegistrantFieldEqualsStep', () => {
         }));
 
         clientWrapperStub.getRegistrantByRegistrantKey.returns(Promise.resolve({
-          data: {
+          data: JSON.stringify({
             registrantKey: 'anyValue',
             joinUrl: 'https://anyDomain/join/anyWebinarKey/anyRegirantKey',
             anyField: 'anyValue'
-          }
+          }),
         }));
       });
 
@@ -158,11 +158,11 @@ describe('RegistrantFieldEqualsStep', () => {
           expectation: expectedRegistrant.expectation,
         }));
         clientWrapperStub.getRegistrantByRegistrantKey.returns(Promise.resolve({
-          data: {
+          data: JSON.stringify({
             registrantKey: 'anyValue',
             joinUrl: 'https://anyDomain/join/anyWebinarKey/anyRegirantKey',
             anyField: 'notAnyValue'
-          }
+          }),
         }));
       });
 
@@ -192,11 +192,11 @@ describe('RegistrantFieldEqualsStep', () => {
           expectation: expectedRegistrant.expectation,
         }));
         clientWrapperStub.getRegistrantByRegistrantKey.returns(Promise.resolve({
-          data: {
+          data: JSON.stringify({
             registrantKey: 'anyValue',
             joinUrl: 'https://anyDomain/join/anyWebinarKey/anyRegirantKey',
             anyField: 'notAnyValue'
-          }
+          }),
         }));
       });
 
@@ -230,11 +230,11 @@ describe('RegistrantFieldEqualsStep', () => {
         }));
 
         clientWrapperStub.getRegistrantByRegistrantKey.returns(Promise.resolve({
-          data: {
+          data: JSON.stringify({
             registrantKey: 'anyValue',
             joinUrl: 'https://anyDomain/join/anyWebinarKey/anyRegirantKey',
             anyField: 'notAnyValue'
-          }
+          }),
         }));
         const response: RunStepResponse = await stepUnderTest.executeStep(protoStep);
         expect(response.getOutcome()).to.equal(RunStepResponse.Outcome.ERROR);
@@ -260,11 +260,11 @@ describe('RegistrantFieldEqualsStep', () => {
         }));
 
         clientWrapperStub.getRegistrantByRegistrantKey.returns(Promise.resolve({
-          data: {
+          data: JSON.stringify({
             registrantKey: 'anyValue',
             joinUrl: 'https://anyDomain/join/anyWebinarKey/anyRegirantKey',
             anyField: 'notAnyValue'
-          }
+          }),
         }));
         const response: RunStepResponse = await stepUnderTest.executeStep(protoStep);
         expect(response.getOutcome()).to.equal(RunStepResponse.Outcome.ERROR);
@@ -292,9 +292,9 @@ describe('RegistrantFieldEqualsStep', () => {
         clientWrapperStub.getRegistrantByRegistrantKey.throws({
           response: {
             status: 404,
-            data: {
+            data: JSON.stringify({
               description: 'anyError'
-            }
+            }),
           },
           message: 'anyError',
         });
@@ -325,9 +325,9 @@ describe('RegistrantFieldEqualsStep', () => {
         clientWrapperStub.getRegistrantByRegistrantKey.throws({
           response: {
             status: 400,
-            data: {
+            data: JSON.stringify({
               description: 'anyError'
-            }
+            }),
           },
           message: 'anyError',
         });
