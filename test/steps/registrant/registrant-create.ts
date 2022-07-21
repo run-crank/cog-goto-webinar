@@ -9,7 +9,7 @@ import { Step } from '../../../src/steps/registrant/registrant-create';
 
 chai.use(sinonChai);
 
-describe('CreateProductStep', () => {
+describe('CreateRegistrantStep', () => {
   const expect = chai.expect;
   let protoStep: ProtoStep;
   let stepUnderTest: Step;
@@ -90,7 +90,7 @@ describe('CreateProductStep', () => {
         clientWrapperStub.createRegistrant.returns(Promise.resolve({
           data: {
             registrantKey: 'anyValue',
-            joinUrl: 'anyValue',
+            joinUrl: 'https://anyDomain/join/anyWebinarKey/anyRegirantKey',
           }
         }));
       });
