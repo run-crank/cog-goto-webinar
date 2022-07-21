@@ -37,7 +37,7 @@ export class CreateRegistrantStep extends BaseStep implements StepInterface {
     }, {
       field: 'joinUrl',
       type: FieldDefinition.Type.STRING,
-      description: 'The Registrant\'s join URL',
+      description: 'The Registrant\'s join Url',
     }],
     dynamicFields: true,
   }];
