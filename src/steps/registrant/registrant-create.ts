@@ -12,11 +12,11 @@ export class CreateRegistrantStep extends BaseStep implements StepInterface {
   protected expectedFields: Field[] = [{
     field: 'organizerKey',
     type: FieldDefinition.Type.STRING,
-    description: 'Webinar Organizer\'s Id',
+    description: 'Webinar Organizer\'s Key',
   }, {
     field: 'webinarKey',
     type: FieldDefinition.Type.STRING,
-    description: 'Webinar\'s Id',
+    description: 'Webinar\'s Key',
   }, {
     field: 'registrant',
     type: FieldDefinition.Type.MAP,
@@ -37,7 +37,7 @@ export class CreateRegistrantStep extends BaseStep implements StepInterface {
     }, {
       field: 'joinUrl',
       type: FieldDefinition.Type.STRING,
-      description: 'The Registrant\'s join URL',
+      description: 'The Registrant\'s join Url',
     }],
     dynamicFields: true,
   }];
