@@ -206,34 +206,6 @@ describe('RegistrantFieldEqualsStep', () => {
       });
     });
 
-    describe('Registrant does not exist on webinar', () => {
-      beforeEach(() => {
-        const expectedRegistrant = {
-          organizerKey: 'anyKey',
-          webinarKey: 'anyKey',
-          registrantKey: 'anyKey',
-          field: 'otherField',
-          operator: 'be',
-          expectation: 'anyValue'
-        };
-
-        protoStep.setData(Struct.fromJavaScript({
-          organizerKey: expectedRegistrant.organizerKey,
-          webinarKey: expectedRegistrant.webinarKey,
-          registrantKey: expectedRegistrant.registrantKey,
-          field: expectedRegistrant.field,
-          operator: expectedRegistrant.operator,
-          expectation: expectedRegistrant.expectation,
-        }));
-        clientWrapperStub.getRegistrantByRegistrantKey.returns(Promise.resolve({}));
-      });
-
-      it('should respond with pass', async () => {
-        const response: RunStepResponse = await stepUnderTest.executeStep(protoStep);
-        expect(response.getOutcome()).to.equal(RunStepResponse.Outcome.FAILED);
-      });
-    });
-
     describe('Error occurred', () => {
       beforeEach(() => {
         

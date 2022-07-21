@@ -106,7 +106,7 @@ export class RegistrantFieldEqualsStep extends BaseStep implements StepInterface
       if (e instanceof util.InvalidOperandError) {
         return this.error(e.message);
       }
-      if (e.response.status === 404) {
+      if (e.response && e.response.status === 404) {
         return this.error(`${e.response.data.description}: %s`, [JSON.stringify({ webinarKey, organizerKey, registrantKey })]);
       }
 
