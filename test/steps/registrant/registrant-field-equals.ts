@@ -93,7 +93,7 @@ describe('RegistrantFieldEqualsStep', () => {
         clientWrapperStub.getRegistrantByRegistrantKey.returns(Promise.resolve({
           data: {
             registrantKey: 'anyValue',
-            joinUrl: 'anyValue',
+            joinUrl: 'https://anyDomain/join/anyWebinarKey/anyRegirantKey',
             anyField: 'anyValue'
           }
         }));
@@ -126,7 +126,7 @@ describe('RegistrantFieldEqualsStep', () => {
         clientWrapperStub.getRegistrantByRegistrantKey.returns(Promise.resolve({
           data: {
             registrantKey: 'anyValue',
-            joinUrl: 'anyValue',
+            joinUrl: 'https://anyDomain/join/anyWebinarKey/anyRegirantKey',
             anyField: 'anyValue'
           }
         }));
@@ -160,7 +160,7 @@ describe('RegistrantFieldEqualsStep', () => {
         clientWrapperStub.getRegistrantByRegistrantKey.returns(Promise.resolve({
           data: {
             registrantKey: 'anyValue',
-            joinUrl: 'anyValue',
+            joinUrl: 'https://anyDomain/join/anyWebinarKey/anyRegirantKey',
             anyField: 'notAnyValue'
           }
         }));
@@ -194,7 +194,7 @@ describe('RegistrantFieldEqualsStep', () => {
         clientWrapperStub.getRegistrantByRegistrantKey.returns(Promise.resolve({
           data: {
             registrantKey: 'anyValue',
-            joinUrl: 'anyValue',
+            joinUrl: 'https://anyDomain/join/anyWebinarKey/anyRegirantKey',
             anyField: 'notAnyValue'
           }
         }));
@@ -260,7 +260,7 @@ describe('RegistrantFieldEqualsStep', () => {
         clientWrapperStub.getRegistrantByRegistrantKey.returns(Promise.resolve({
           data: {
             registrantKey: 'anyValue',
-            joinUrl: 'anyValue',
+            joinUrl: 'https://anyDomain/join/anyWebinarKey/anyRegirantKey',
             anyField: 'notAnyValue'
           }
         }));
@@ -290,7 +290,7 @@ describe('RegistrantFieldEqualsStep', () => {
         clientWrapperStub.getRegistrantByRegistrantKey.returns(Promise.resolve({
           data: {
             registrantKey: 'anyValue',
-            joinUrl: 'anyValue',
+            joinUrl: 'https://anyDomain/join/anyWebinarKey/anyRegirantKey',
             anyField: 'notAnyValue'
           }
         }));

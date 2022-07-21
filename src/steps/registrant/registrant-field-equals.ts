@@ -77,6 +77,7 @@ export class RegistrantFieldEqualsStep extends BaseStep implements StepInterface
     try {
       let data: any = await this.client.getRegistrantByRegistrantKey(registrantKey, webinarKey, organizerKey);
       data = data.data; // Reassign data from axios response
+      data['registrantKey'] = data['joinUrl'].split('/join/')[1].split('/')[1];
 
       if (data && data.hasOwnProperty(field)) {
         const result = this.assert(operator, data[field], expectedValue, field);
