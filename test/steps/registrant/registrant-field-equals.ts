@@ -93,7 +93,7 @@ describe('RegistrantFieldEqualsStep', () => {
         clientWrapperStub.getRegistrantByRegistrantKey.returns(Promise.resolve({
           data: {
             registrantKey: 'anyValue',
-            joinUrl: 'anyValue',
+            joinUrl: 'https://anyDomain/join/anyWebinarKey/anyRegirantKey',
             anyField: 'anyValue'
           }
         }));
@@ -126,7 +126,7 @@ describe('RegistrantFieldEqualsStep', () => {
         clientWrapperStub.getRegistrantByRegistrantKey.returns(Promise.resolve({
           data: {
             registrantKey: 'anyValue',
-            joinUrl: 'anyValue',
+            joinUrl: 'https://anyDomain/join/anyWebinarKey/anyRegirantKey',
             anyField: 'anyValue'
           }
         }));
@@ -160,7 +160,7 @@ describe('RegistrantFieldEqualsStep', () => {
         clientWrapperStub.getRegistrantByRegistrantKey.returns(Promise.resolve({
           data: {
             registrantKey: 'anyValue',
-            joinUrl: 'anyValue',
+            joinUrl: 'https://anyDomain/join/anyWebinarKey/anyRegirantKey',
             anyField: 'notAnyValue'
           }
         }));
@@ -194,38 +194,10 @@ describe('RegistrantFieldEqualsStep', () => {
         clientWrapperStub.getRegistrantByRegistrantKey.returns(Promise.resolve({
           data: {
             registrantKey: 'anyValue',
-            joinUrl: 'anyValue',
+            joinUrl: 'https://anyDomain/join/anyWebinarKey/anyRegirantKey',
             anyField: 'notAnyValue'
           }
         }));
-      });
-
-      it('should respond with pass', async () => {
-        const response: RunStepResponse = await stepUnderTest.executeStep(protoStep);
-        expect(response.getOutcome()).to.equal(RunStepResponse.Outcome.FAILED);
-      });
-    });
-
-    describe('Registrant does not exist on webinar', () => {
-      beforeEach(() => {
-        const expectedRegistrant = {
-          organizerKey: 'anyKey',
-          webinarKey: 'anyKey',
-          registrantKey: 'anyKey',
-          field: 'otherField',
-          operator: 'be',
-          expectation: 'anyValue'
-        };
-
-        protoStep.setData(Struct.fromJavaScript({
-          organizerKey: expectedRegistrant.organizerKey,
-          webinarKey: expectedRegistrant.webinarKey,
-          registrantKey: expectedRegistrant.registrantKey,
-          field: expectedRegistrant.field,
-          operator: expectedRegistrant.operator,
-          expectation: expectedRegistrant.expectation,
-        }));
-        clientWrapperStub.getRegistrantByRegistrantKey.returns(Promise.resolve({}));
       });
 
       it('should respond with pass', async () => {
@@ -260,7 +232,7 @@ describe('RegistrantFieldEqualsStep', () => {
         clientWrapperStub.getRegistrantByRegistrantKey.returns(Promise.resolve({
           data: {
             registrantKey: 'anyValue',
-            joinUrl: 'anyValue',
+            joinUrl: 'https://anyDomain/join/anyWebinarKey/anyRegirantKey',
             anyField: 'notAnyValue'
           }
         }));
@@ -290,7 +262,7 @@ describe('RegistrantFieldEqualsStep', () => {
         clientWrapperStub.getRegistrantByRegistrantKey.returns(Promise.resolve({
           data: {
             registrantKey: 'anyValue',
-            joinUrl: 'anyValue',
+            joinUrl: 'https://anyDomain/join/anyWebinarKey/anyRegirantKey',
             anyField: 'notAnyValue'
           }
         }));
