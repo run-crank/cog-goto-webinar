@@ -12,10 +12,6 @@ export class RegistrantFieldEqualsStep extends BaseStep implements StepInterface
   protected stepExpression: string = 'the (?<field>[a-zA-Z0-9_-]+) field on goto webinar registrant (?<registrantKey>[a-zA-Z0-9_-]+) should (?<operator>be set|not be set|be less than|be greater than|be one of|be|contain|not be one of|not be|not contain|match|not match) ?(?<expectation>.+)?';
   protected stepType: StepDefinition.Type = StepDefinition.Type.VALIDATION;
   protected expectedFields: Field[] = [{
-    field: 'organizerKey',
-    type: FieldDefinition.Type.STRING,
-    description: "Webinar's Organizer Key",
-  }, {
     field: 'webinarKey',
     type: FieldDefinition.Type.STRING,
     description: "Webinar's Key",
@@ -64,7 +60,7 @@ export class RegistrantFieldEqualsStep extends BaseStep implements StepInterface
   async executeStep(step: Step) {
     const stepData: any = step.getData() ? step.getData().toJavaScript() : {};
     const expectedValue = stepData.expectation;
-    const organizerKey = stepData.organizerKey;
+    const organizerKey = stepData.organizerKey || '12345'; // organizer key is not needed but still has to have a value
     const webinarKey = stepData.webinarKey;
     const registrantKey = stepData.registrantKey;
     const operator: string = stepData.operator || 'be';

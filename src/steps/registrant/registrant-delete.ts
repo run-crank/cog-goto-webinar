@@ -10,10 +10,6 @@ export class DeleteRegistrantStep extends BaseStep implements StepInterface {
   protected stepType: StepDefinition.Type = StepDefinition.Type.ACTION;
 
   protected expectedFields: Field[] = [{
-    field: 'organizerKey',
-    type: FieldDefinition.Type.STRING,
-    description: 'Webinar Organizer\'s Key',
-  }, {
     field: 'webinarKey',
     type: FieldDefinition.Type.STRING,
     description: 'Webinar\'s Key',
@@ -32,7 +28,7 @@ export class DeleteRegistrantStep extends BaseStep implements StepInterface {
 
   async executeStep(step: Step) {
     const stepData: any = step.getData().toJavaScript();
-    const organizerKey = stepData.organizerKey;
+    const organizerKey = stepData.organizerKey || '12345'; // organizer key is not needed but still has to have a value
     const webinarKey = stepData.webinarKey;
     const registrantKey = stepData.registrantKey;
 
