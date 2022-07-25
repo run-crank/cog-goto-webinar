@@ -37,11 +37,6 @@ describe('CreateRegistrantStep', () => {
         return field.toObject();
       });
 
-      // organizerKey field
-      const organizerKey: any = fields.find(f => f.key === 'organizerKey');
-      expect(organizerKey.optionality).to.equal(FieldDefinition.Optionality.REQUIRED);
-      expect(organizerKey.type).to.equal(FieldDefinition.Type.STRING);
-
       // webinarKey field
       const webinarKey: any = fields.find(f => f.key === 'webinarKey');
       expect(webinarKey.optionality).to.equal(FieldDefinition.Optionality.REQUIRED);
