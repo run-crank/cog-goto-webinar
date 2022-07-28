@@ -12,7 +12,7 @@ export class CreateRegistrantStep extends BaseStep implements StepInterface {
   protected expectedFields: Field[] = [{
     field: 'webinarKey',
     type: FieldDefinition.Type.STRING,
-    description: 'Webinar\'s Key',
+    description: 'Webinar Key',
   }, {
     field: 'registrant',
     type: FieldDefinition.Type.MAP,
@@ -25,7 +25,7 @@ export class CreateRegistrantStep extends BaseStep implements StepInterface {
     fields: [{
       field: 'id',
       type: FieldDefinition.Type.STRING,
-      description: 'The Registrant\'s ID',
+      description: 'The Registrant Id',
     }, {
       field: 'registrantKey',
       type: FieldDefinition.Type.STRING,
