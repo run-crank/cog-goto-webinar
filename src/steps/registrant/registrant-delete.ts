@@ -12,11 +12,11 @@ export class DeleteRegistrantStep extends BaseStep implements StepInterface {
   protected expectedFields: Field[] = [{
     field: 'webinarKey',
     type: FieldDefinition.Type.STRING,
-    description: 'Webinar\'s Key',
+    description: 'Webinar Key',
   }, {
     field: 'registrantKey',
     type: FieldDefinition.Type.STRING,
-    description: 'Registrant\' Key',
+    description: 'Registrant Key',
   }];
 
   protected expectedRecords: ExpectedRecord[] = [{

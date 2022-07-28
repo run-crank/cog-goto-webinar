@@ -14,11 +14,11 @@ export class RegistrantFieldEqualsStep extends BaseStep implements StepInterface
   protected expectedFields: Field[] = [{
     field: 'webinarKey',
     type: FieldDefinition.Type.STRING,
-    description: "Webinar's Key",
+    description: 'Webinar Key',
   }, {
     field: 'registrantKey',
     type: FieldDefinition.Type.STRING,
-    description: "Registrant's Key",
+    description: 'Registrant Key',
   }, {
     field: 'field',
     type: FieldDefinition.Type.STRING,
