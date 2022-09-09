@@ -15,6 +15,9 @@ class ClientWrapper {
     this.client = clientConstructor;
 
     try {
+      // auth.set('clientId','9465beee-0d11-40d8-a1ab-72f416de7893');
+      // auth.set('clientSecret','q7jomDcHvxhIBWtUTBSobUMz');
+      // auth.set('refreshToken','eyJraWQiOiJvYXV0aHYyLmxtaS5jb20uMDIxOSIsImFsZyI6IlJTNTEyIn0.eyJzYyI6ImNvbGxhYjoiLCJzdWIiOiIxNzU1Njg4NDk3MTExNDA5OTg5IiwiYXVkIjoiOTQ2NWJlZWUtMGQxMS00MGQ4LWExYWItNzJmNDE2ZGU3ODkzIiwib2duIjoicHdkIiwidHlwIjoiciIsImV4cCI6MTY2MDk2MzcyMSwiaWF0IjoxNjU4MzcxNzIxLCJqdGkiOiJkNGQxNmE3ZS03ZmU3LTRhZWQtYTIxYS03NjQwZGNhODIzYzQifQ.GI1LtrhTyb9INOdMTfQWwqGOmK9VVOkQU8bk9EKZLqRXQj06GNm-Oo-PQIMu12zexXceWs-jTz0Bs2tc_GzaDmmQ27hVZivDiH2ZePbhKQgabzGjWhn-IMq0PNjNwCprLp_kTV9ScN46Uhq77YWtPFrc2UNBWLGhRMP960wwUaQMO4Oq4qzlDYpVKGhpLx-ybzJPCV4u3Zofz4PVxyWgk1hoHxaCn2DhwaqSGzmW8JcG071IERyNfHsOauhiCwSIrxZU795bUFew9zcLHIDPqbnSGgIHCJybhOIgxT3jwEaojchpm6c5WL7npQ21zVylEXOnELiXa5JVP9B8fevb7Q');
       if (auth.get('refreshToken').toString() && auth.get('clientId').toString() && auth.get('clientSecret').toString()) {
         this.clientReady = new Promise(async (resolve, reject) => {
           try {
