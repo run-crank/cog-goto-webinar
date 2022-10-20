@@ -77,6 +77,7 @@ export class RegistrantFieldEqualsStep extends BaseStep implements StepInterface
       // Using regex, put quotes on the registrantKey to get full key when parsed
       data = data.replace(/([\[:])?(\d+)([,\}\]])/g, '$1\"$2\"$3');
       data = JSON.parse(data);
+      const records = this.createRecords(data, stepData['__stepOrder']);
 
       if (data && data.hasOwnProperty(field)) {
         const result = this.assert(operator, data[field], expectedValue, field, stepData['__piiSuppressionLevel']);
@@ -89,7 +90,7 @@ export class RegistrantFieldEqualsStep extends BaseStep implements StepInterface
           return this.fail(
             'Found the registrant with key %s, but there was no %s field.',
             [registrantKey, field],
-            [this.createRecord(data)],
+            records,
           );
         } else {
           return this.fail("Couldn't find a registrant associated with %s", [
@@ -113,8 +114,13 @@ export class RegistrantFieldEqualsStep extends BaseStep implements StepInterface
     }
   }
 
-  createRecord(registrant: Record<string, any>) {
-    return this.keyValue('registrant', 'Checked Registrant', registrant);
+  createRecords(registrant: Record<string, any>, stepOrder = 1) {
+    const records = [];
+    // Base Record
+    records.push(this.keyValue('registrant', 'Checked Registrant', registrant));
+    // Ordered Record
+    records.push(this.keyValue(`registrant.${stepOrder}`, `Created Registrant from Step ${stepOrder}`, registrant));
+    return records;
   }
 }
 
