@@ -80,7 +80,7 @@ export class RegistrantFieldEqualsStep extends BaseStep implements StepInterface
       const records = this.createRecords(data, stepData['__stepOrder']);
 
       if (data && data.hasOwnProperty(field)) {
-        const result = this.assert(operator, data[field], expectedValue, field);
+        const result = this.assert(operator, data[field], expectedValue, field, stepData['__piiSuppressionLevel']);
         return result.valid ? this.pass(result.message, [], records)
           : this.fail(result.message, [], records);
 
