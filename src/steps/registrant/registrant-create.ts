@@ -5,9 +5,11 @@ import { Step, FieldDefinition, StepDefinition, RecordDefinition, StepRecord } f
 
 export class CreateRegistrantStep extends BaseStep implements StepInterface {
 
-  protected stepName: string = 'Create a GoTo Webinar Registrant';
+  protected stepName: string = 'Create a GoTo Webinar registrant';
   protected stepExpression: string = 'create a goto webinar registrant';
   protected stepType: StepDefinition.Type = StepDefinition.Type.ACTION;
+  protected actionList: string[] = ['create'];
+  protected targetObject: string = 'Registrant';
 
   protected expectedFields: Field[] = [{
     field: 'webinarKey',

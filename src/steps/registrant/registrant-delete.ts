@@ -5,9 +5,11 @@ import { Step, FieldDefinition, StepDefinition, RecordDefinition, StepRecord } f
 
 export class DeleteRegistrantStep extends BaseStep implements StepInterface {
 
-  protected stepName: string = 'Delete a GoTo Webinar Registrant';
+  protected stepName: string = 'Delete a GoTo Webinar registrant';
   protected stepExpression: string = 'delete the (?<registrantKey>[a-zA-Z0-9_-]+) goto webinar registrant';
   protected stepType: StepDefinition.Type = StepDefinition.Type.ACTION;
+  protected actionList: string[] = ['delete'];
+  protected targetObject: string = 'Registrant';
 
   protected expectedFields: Field[] = [{
     field: 'webinarKey',

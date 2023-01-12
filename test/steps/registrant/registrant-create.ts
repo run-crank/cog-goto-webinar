@@ -26,7 +26,7 @@ describe('CreateRegistrantStep', () => {
     it('should return expected step metadata', () => {
       const stepDef: StepDefinition = stepUnderTest.getDefinition();
       expect(stepDef.getStepId()).to.equal('CreateRegistrantStep');
-      expect(stepDef.getName()).to.equal('Create a GoTo Webinar Registrant');
+      expect(stepDef.getName()).to.equal('Create a GoTo Webinar registrant');
       expect(stepDef.getExpression()).to.equal('create a goto webinar registrant');
       expect(stepDef.getType()).to.equal(StepDefinition.Type.ACTION);
     });

@@ -26,7 +26,7 @@ describe('DeleteRegistrantStep', () => {
     it('should return expected step metadata', () => {
       const stepDef: StepDefinition = stepUnderTest.getDefinition();
       expect(stepDef.getStepId()).to.equal('DeleteRegistrantStep');
-      expect(stepDef.getName()).to.equal('Delete a GoTo Webinar Registrant');
+      expect(stepDef.getName()).to.equal('Delete a GoTo Webinar registrant');
       expect(stepDef.getExpression()).to.equal('delete the (?<registrantKey>[a-zA-Z0-9_-]+) goto webinar registrant');
       expect(stepDef.getType()).to.equal(StepDefinition.Type.ACTION);
     });
