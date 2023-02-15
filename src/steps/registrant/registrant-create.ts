@@ -57,10 +57,11 @@ export class CreateRegistrantStep extends BaseStep implements StepInterface {
       registrant['registrantKey'] = data['registrantKey'];
       registrant['joinUrl'] = data['joinUrl'];
 
+      const record = this.createRecord(registrant);
+      const passingRecord = this.createPassingRecord(registrant, Object.keys(registrant));
       const orderedRecord = this.createOrderedRecord(registrant, stepData['__stepOrder']);
 
-      const record = this.createRecord(registrant);
-      return this.pass('Successfully created GoTo Webinar registrant', [], [record, orderedRecord]);
+      return this.pass('Successfully created GoTo Webinar registrant', [], [record, passingRecord, orderedRecord]);
     } catch (e) {
       if (e.response && e.response.status === 404) {
         return this.error(`${JSON.parse(e.response.data).description}: %s`, [JSON.stringify({ webinarKey, organizerKey })]);
@@ -79,6 +80,18 @@ export class CreateRegistrantStep extends BaseStep implements StepInterface {
   public createRecord(registrant): StepRecord {
     const record = this.keyValue('registrant', 'Created Registrant', registrant);
     return record;
+  }
+
+  public createPassingRecord(data, fields): StepRecord {
+    const filteredData = {};
+    if (data) {
+      Object.keys(data).forEach((key) => {
+        if (fields.includes(key)) {
+          filteredData[key] = data[key];
+        }
+      });
+    }
+    return this.keyValue('exposeOnPass:registrant', 'Created Registrant', filteredData);
   }
 
   public createOrderedRecord(registrant, stepOrder = 1): StepRecord {
